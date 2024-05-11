@@ -1,21 +1,20 @@
-// App.js
 import React, { useState } from "react";
-import "./App.css"; // Importuj style CSS
+import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Quiz from "./Components/Quiz";
 
 function App() {
-  const [isQuizActive, setIsQuizActive] = useState(false); // Dodajemy stan określający, czy quiz jest aktywny
-  const [topScore, setTopScore] = useState(0); // Dodajemy stan dla top score
+  const [isQuizActive, setIsQuizActive] = useState(false);
+  const [topScore, setTopScore] = useState(0);
 
   const handlePlayClick = () => {
-    setIsQuizActive(true); // Ustawiamy stan na true po kliknięciu przycisku "Play"
+    setIsQuizActive(true);
   };
 
   const handleTryAgain = (score) => {
     setIsQuizActive(false); // Ustawiamy stan na false po kliknięciu przycisku "Try Again"
     if (score > topScore) {
-      setTopScore(score); // Aktualizujemy top score jeśli wynik użytkownika jest większy
+      setTopScore(score);
     }
   };
 

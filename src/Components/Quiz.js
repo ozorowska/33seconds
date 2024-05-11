@@ -1,23 +1,23 @@
-// Quiz.js
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import "./Quiz.css"; // Zaimportuj plik CSS dla Quizu
+import "./Quiz.css"; 
 
 function Quiz({ onTryAgain, topScore }) {
   const [question, setQuestion] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [incorrectAnswers, setIncorrectAnswers] = useState([]);
   const [isAnswered, setIsAnswered] = useState(false);
-  const [isCorrectAnswer, setIsCorrectAnswer] = useState(null); // Dodajemy stan dla sprawdzenia poprawności odpowiedzi
-  const [score, setScore] = useState(0); // Dodajemy stan dla wyniku
-  const [isQuizActive, setIsQuizActive] = useState(true); // Rozpoczynamy quiz automatycznie
-  const [timeLeft, setTimeLeft] = useState(33); // Dodajemy stan dla czasu pozostałego na quiz
-  const [buttonsOrder, setButtonsOrder] = useState([]); // Dodajemy stan dla kolejności przycisków
-  const timerRef = useRef(null); // Dodajemy ref dla timera
+  const [isCorrectAnswer, setIsCorrectAnswer] = useState(null); 
+  const [score, setScore] = useState(0); 
+  const [isQuizActive, setIsQuizActive] = useState(true);
+  const [timeLeft, setTimeLeft] = useState(33); 
+  const [buttonsOrder, setButtonsOrder] = useState([]); 
+  const timerRef = useRef(null); 
 
   const fetchRandomQuestion = async () => {
     try {
-      // Pobierz losowe pytanie z API
+
+      // Pobieranie losowych panstw z API
       const response = await axios.get("https://restcountries.com/v3.1/all");
       const countries = response.data;
 
@@ -46,7 +46,7 @@ function Quiz({ onTryAgain, topScore }) {
 
       setIncorrectAnswers(incorrect);
 
-      // Ustaw kolejność przycisków tylko raz po pobraniu nowego pytania
+      // Ustawianie kolejności przycisków tylko raz po pobraniu nowego pytania
       setButtonsOrder(shuffleArray([...incorrect, capital]));
     } catch (error) {
       console.error("Error fetching data:", error);

@@ -29,29 +29,24 @@
 .answer-button.incorrect {
   background-color: red;
 }
-/* Quiz.css */
 .play-button {
-  /* Stylizacja przycisku "Play" */
-  background-color: #1e7e34; /* Zielony kolor tła */
-  color: #fff; /* Biały kolor tekstu */
-  border: none; /* Usunięcie obramowania */
+  background-color: #1e7e34;
+  color: #fff;
+  border: none;
   border-radius: 10px;
-  padding: 20px 40px; /* Wielkość wewnętrznego marginesu */
-  font-size: 1.2rem; /* Rozmiar czcionki */
-  cursor: pointer; /* Kursor wskazujący na interaktywny element */
-  transition: background-color 0.3s; /* Płynne przejście koloru tła */
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .play-button:hover {
-  background-color: #218838; /* Ciemniejszy zielony kolor tła po najechaniu kursorem */
+  background-color: #218838;
 }
 
 .play-button:active {
-  background-color: #1e7e34; /* Jeszcze ciemniejszy zielony kolor tła po kliknięciu */
+  background-color: #1e7e34;
 }
-
-/* Nadpisanie stylu dla przycisku "Try Again" */
-/* Quiz.css */
 
 .timer {
   position: fixed;
@@ -68,4 +63,3 @@
   font-weight: bold;
   border: 2px solid #000000;
 }
-
