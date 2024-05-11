@@ -4,10 +4,14 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Quiz from "./Components/Quiz";
 
 function App() {
-  const [view, setView] = useState("home");
+  const [isQuizActive, setIsQuizActive] = useState(false); // Dodajemy stan określający, czy quiz jest aktywny
 
   const handlePlayClick = () => {
-    setView("quiz");
+    setIsQuizActive(true); // Ustawiamy stan na true po kliknięciu przycisku "Play"
+  };
+
+  const handleTryAgain = () => {
+    setIsQuizActive(false); // Ustawiamy stan na false po kliknięciu przycisku "Try Again"
   };
 
   return (
@@ -17,7 +21,10 @@ function App() {
           <h1 className="display-4">33 seconds quiz</h1>
         </header>
         <main className="App-main">
-          {view === "home" && (
+          {/* Renderujemy komponent Quiz tylko jeśli isQuizActive jest true */}
+          {isQuizActive ? (
+            <Quiz onTryAgain={handleTryAgain} />
+          ) : (
             <>
               <button
                 onClick={handlePlayClick}
@@ -28,7 +35,6 @@ function App() {
               <div className="top-score">Top score: 20</div>
             </>
           )}
-          {view === "quiz" && <Quiz />}
         </main>
       </div>
       <footer className="App-footer mt-5">

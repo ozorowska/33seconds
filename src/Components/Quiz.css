@@ -1,0 +1,60 @@
+.Quiz {
+  text-align: center;
+}
+
+.answers {
+  margin-top: 30px;
+}
+
+.answer-button {
+  background-color: #007bff;
+  color: white;
+  padding: 30px 60px;
+  margin: 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 24px;
+}
+
+.answer-button:hover {
+  background-color: #0056b3;
+}
+
+.answer-button.correct {
+  background-color: green;
+}
+
+.answer-button.incorrect {
+  background-color: red;
+}
+/* Quiz.css */
+.play-button {
+  /* Stylizacja przycisku "Play" */
+  background-color: #28a745; /* Zielony kolor tła */
+  color: #fff; /* Biały kolor tekstu */
+  border: none; /* Usunięcie obramowania */
+  padding: 10px 20px; /* Wielkość wewnętrznego marginesu */
+  font-size: 1.2rem; /* Rozmiar czcionki */
+  cursor: pointer; /* Kursor wskazujący na interaktywny element */
+  transition: background-color 0.3s; /* Płynne przejście koloru tła */
+}
+
+.play-button:hover {
+  background-color: #218838; /* Ciemniejszy zielony kolor tła po najechaniu kursorem */
+}
+
+.play-button:active {
+  background-color: #1e7e34; /* Jeszcze ciemniejszy zielony kolor tła po kliknięciu */
+}
+
+/* Nadpisanie stylu dla przycisku "Try Again" */
+.play-button.try-again {
+  /* Stylizacja przycisku "Try Again" */
+  /* Możemy zastosować takie same style jak dla przycisku "Play" */
+}
+
+
+
+

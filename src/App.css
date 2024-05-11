@@ -22,11 +22,25 @@
   color: #333333;
 }
 
-.btn-play {
+/* App.css */
+
+/* App.css */
+
+.btn.btn-play {
   width: 300px;
   height: 100px;
-  font-size: 36px;
-  font-weight: bold;
+  font-size: 36px; /* Zwiększenie rozmiaru czcionki */
+
+  background-color: #1e7e34 !important; /* Zmiana koloru tła z większym priorytetem */
+  color: #fff !important; /* Biały kolor tekstu z większym priorytetem */
+}
+
+.btn.btn-play:hover {
+  background-color: #1c7430 !important; /* Ciemniejszy zielony kolor tła po najechaniu kursorem */
+}
+
+.btn.btn-play:active {
+  background-color: #19692b !important; /* Jeszcze ciemniejszy zielony kolor tła po kliknięciu */
 }
 
 .top-score {
