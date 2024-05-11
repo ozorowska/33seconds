@@ -28,7 +28,7 @@ function App() {
         <main className="App-main">
           {/* Renderujemy komponent Quiz tylko jeśli isQuizActive jest true */}
           {isQuizActive ? (
-            <Quiz onTryAgain={handleTryAgain} topScore={topScore} />
+            <Quiz onTryAgain={handleTryAgain} />
           ) : (
             <>
               <button
