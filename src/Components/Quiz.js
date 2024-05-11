@@ -1,8 +1,9 @@
+// Quiz.js
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./Quiz.css"; // Zaimportuj plik CSS dla Quizu
 
-function Quiz({ onTryAgain }) {
+function Quiz({ onTryAgain, topScore }) {
   const [question, setQuestion] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [incorrectAnswers, setIncorrectAnswers] = useState([]);
@@ -79,7 +80,7 @@ function Quiz({ onTryAgain }) {
       {!isQuizActive && (
         <div>
           <h2>Score: {score}</h2>
-          <button onClick={onTryAgain} className="play-button try-again">
+          <button onClick={() => onTryAgain(score)} className="play-button try-again">
             Try Again
           </button>
         </div>

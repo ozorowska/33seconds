@@ -32,10 +32,11 @@
 /* Quiz.css */
 .play-button {
   /* Stylizacja przycisku "Play" */
-  background-color: #28a745; /* Zielony kolor tła */
+  background-color: #1e7e34; /* Zielony kolor tła */
   color: #fff; /* Biały kolor tekstu */
   border: none; /* Usunięcie obramowania */
-  padding: 10px 20px; /* Wielkość wewnętrznego marginesu */
+  border-radius: 10px;
+  padding: 20px 40px; /* Wielkość wewnętrznego marginesu */
   font-size: 1.2rem; /* Rozmiar czcionki */
   cursor: pointer; /* Kursor wskazujący na interaktywny element */
   transition: background-color 0.3s; /* Płynne przejście koloru tła */
@@ -50,11 +51,4 @@
 }
 
 /* Nadpisanie stylu dla przycisku "Try Again" */
-.play-button.try-again {
-  /* Stylizacja przycisku "Try Again" */
-  /* Możemy zastosować takie same style jak dla przycisku "Play" */
-}
-
-
-
 
