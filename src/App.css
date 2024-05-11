@@ -1,0 +1,47 @@
+/* App.css */
+
+.App {
+  background-image: url("./assets/76827.jpg"); /* Dodaj ścieżkę do swojego obrazka */
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Comic Sans MS", sans-serif; /* Zmiana na inną czcionkę */
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 50px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.App-header h1 {
+  color: #333333;
+}
+
+.btn-play {
+  width: 300px;
+  height: 100px;
+  font-size: 36px;
+  font-weight: bold;
+}
+
+.top-score {
+  margin-top: 50px;
+  color: #333333;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.App-footer {
+  text-align: center;
+  color: #333333;
+  font-family: "Comic Sans MS", sans-serif; /* Zmiana na inną czcionkę */
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
