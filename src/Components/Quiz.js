@@ -198,3 +198,4 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
 }
 
 export default Quiz;
+;
