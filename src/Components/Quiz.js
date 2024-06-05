@@ -2,8 +2,28 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./Quiz.css"; 
 import Lifelines from "./Lifelines";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
+
+
+function CustomModal({ message, onClose }) {
+  return (
+    <Modal show={true} onHide={onClose}>
+      <Modal.Header closeButton>
+      </Modal.Header>
+      <Modal.Body>{message}</Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={onClose}>
+          Thank you!
+        </Button>
+      </Modal.Footer>
+    </Modal>
+  );
+}
 
 function Quiz({ onTryAgain, topScore, difficulty }) {
+  const [showModal, setShowModal] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   const [question, setQuestion] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [incorrectAnswers, setIncorrectAnswers] = useState([]);
@@ -15,9 +35,9 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
   const timerRef = useRef(null); 
 
   const difficultyLevels = {
-    easy: { time: 15 }, // Dla poziomu łatwego, 30 sekund na odpowiedź
-    medium: { time: 10 }, // Dla poziomu średniego, 20 sekund na odpowiedź
-    hard: { time: 5 } // Dla poziomu trudnego, 10 sekund na odpowiedź
+    easy: { time: 15 }, 
+    medium: { time: 10 }, 
+    hard: { time: 5 } 
   };
 
   const [timeLeft, setTimeLeft] = useState(difficultyLevels[difficulty].time); 
@@ -61,25 +81,25 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
     }
   };
 
+
+
   const handleUseLifeline = async () => {
     try {
-      const response = await axios.get("https://restcountries.com/v3.1/all");
-      const countries = response.data;
-  
-      // Szukamy kraju, który odpowiada poprawnej odpowiedzi
-      const correctCountry = countries.find((country) => country.capital && country.capital[0] === correctAnswer);
-  
-      // Jeśli znaleźliśmy kraj, wyświetlamy jego nazwę w wyskakującym okienku
-      if (correctCountry) {
-        alert(`Poprawna odpowiedź to: ${correctAnswer}`);
+      if (correctAnswer) {
+        setModalMessage(`The correct answer is: ${correctAnswer}`);
+        setShowModal(true);
       } else {
-        alert("Nie udało się znaleźć poprawnej odpowiedzi.");
+        console.log("The correct answer has not been set yet.");
       }
     } catch (error) {
-      console.error("Błąd podczas pobierania danych:", error);
-      alert("Wystąpił błąd podczas pobierania danych.");
+      console.error("Error fetching data:", error);
+      setModalMessage("An error occurred while fetching data.");
+      setShowModal(true);
     }
   };
+  
+
+
 
   const shuffleArray = (array) => {
     const shuffledArray = [...array];
@@ -158,6 +178,9 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
       {isQuizActive && <h1>{question}</h1>}
       {/* Dodajemy komponent Lifelines */}
       {isQuizActive && <Lifelines onUseLifeline={handleUseLifeline} />}
+      {showModal && (
+      <CustomModal message={modalMessage} onClose={() => setShowModal(false)} />
+    )}
       {!isQuizActive && (
         <div>
           <h2>Score: {score}</h2>

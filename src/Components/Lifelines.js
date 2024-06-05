@@ -8,14 +8,14 @@ function Lifelines({ onUseLifeline }) {
       onUseLifeline();
       setLifelinesUsed(lifelinesUsed + 1);
     } else {
-      alert("Wykorzystałeś już wszystkie koła ratunkowe!");
+      alert("You have already used all lifelines!");
     }
   };
 
   return (
     <div>
-      <button onClick={handleUseLifeline}>Koło ratunkowe</button>
-      <p>Pozostałe koła ratunkowe: {1 - lifelinesUsed}</p>
+      <button onClick={handleUseLifeline}>Lifeline</button>
+      <p>Remaining lifelines: {1 - lifelinesUsed}</p>
     </div>
   );
 }
