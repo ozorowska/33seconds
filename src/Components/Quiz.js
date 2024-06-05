@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./Quiz.css"; 
+import Lifelines from "./Lifelines";
 
 function Quiz({ onTryAgain, topScore, difficulty }) {
   const [question, setQuestion] = useState("");
@@ -57,6 +58,26 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
       setButtonsOrder(shuffleArray([...incorrect, capital]));
     } catch (error) {
       console.error("Error fetching data:", error);
+    }
+  };
+
+  const handleUseLifeline = async () => {
+    try {
+      const response = await axios.get("https://restcountries.com/v3.1/all");
+      const countries = response.data;
+  
+      // Szukamy kraju, który odpowiada poprawnej odpowiedzi
+      const correctCountry = countries.find((country) => country.capital && country.capital[0] === correctAnswer);
+  
+      // Jeśli znaleźliśmy kraj, wyświetlamy jego nazwę w wyskakującym okienku
+      if (correctCountry) {
+        alert(`Poprawna odpowiedź to: ${correctAnswer}`);
+      } else {
+        alert("Nie udało się znaleźć poprawnej odpowiedzi.");
+      }
+    } catch (error) {
+      console.error("Błąd podczas pobierania danych:", error);
+      alert("Wystąpił błąd podczas pobierania danych.");
     }
   };
 
@@ -135,6 +156,8 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
     <div className="Quiz">
       {isQuizActive && <div className="timer">{timeLeft}</div>}
       {isQuizActive && <h1>{question}</h1>}
+      {/* Dodajemy komponent Lifelines */}
+      {isQuizActive && <Lifelines onUseLifeline={handleUseLifeline} />}
       {!isQuizActive && (
         <div>
           <h2>Score: {score}</h2>
