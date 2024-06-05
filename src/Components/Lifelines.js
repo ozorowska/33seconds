@@ -1,18 +1,22 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
 function Lifelines({ onUseLifeline }) {
   const [lifelinesUsed, setLifelinesUsed] = useState(0);
   const [showModal, setShowModal] = useState(false);
+  const timerRef = useRef(null);
+
 
 
   const handleUseLifeline = () => {
     if (lifelinesUsed < 1) {
       onUseLifeline();
       setLifelinesUsed(lifelinesUsed + 1);
+      clearInterval(timerRef.current);
     } else {
         setShowModal(true);
+        clearInterval(timerRef.current);
     }
   };
 

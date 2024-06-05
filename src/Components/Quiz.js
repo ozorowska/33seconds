@@ -88,6 +88,7 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
       if (correctAnswer) {
         setModalMessage(`The correct answer is: ${correctAnswer}`);
         setShowModal(true);
+        clearInterval(timerRef.current);
       } else {
         console.log("The correct answer has not been set yet.");
       }
@@ -95,6 +96,8 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
       console.error("Error fetching data:", error);
       setModalMessage("An error occurred while fetching data.");
       setShowModal(true);
+      clearInterval(timerRef.current);
+
     }
   };
   
@@ -110,10 +113,11 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
     return shuffledArray;
   };
 
-  useEffect(() => {
-    if (isQuizActive) {
+
+
+   useEffect(() => {
+    if (isQuizActive && !showModal) {
       fetchRandomQuestion();
-      // Uruchamiamy timer na czas odpowiadający wybranemu poziomowi trudności
       timerRef.current = setInterval(() => {
         setTimeLeft((prevTimeLeft) => {
           if (prevTimeLeft === 0) {
@@ -124,13 +128,14 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
             return prevTimeLeft - 1;
           }
         });
-      }, 1000); // 1000ms = 1s
+      }, 1000);
     } else {
       clearInterval(timerRef.current);
     }
+    
 
     return () => clearInterval(timerRef.current); // Czyszczenie interwału przy odmontowywaniu komponentu
-  }, [isQuizActive]);
+  }, [isQuizActive, showModal]);
 
   const handleAnswerClick = (answer) => {
     if (!isAnswered) {
@@ -172,6 +177,23 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
     }
   }, [isQuizActive, score, topScore, onTryAgain]);
 
+  const handleModalClose = () => {
+    setShowModal(false);
+    if (isQuizActive) {
+      timerRef.current = setInterval(() => {
+        setTimeLeft((prevTimeLeft) => {
+          if (prevTimeLeft === 0) {
+            clearInterval(timerRef.current);
+            setIsQuizActive(false);
+            return 0;
+          } else {
+            return prevTimeLeft - 1;
+          }
+        });
+      }, 1000);
+    }
+  };
+  
   return (
     <div className="Quiz">
       {isQuizActive && <div className="timer">{timeLeft}</div>}
