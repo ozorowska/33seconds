@@ -5,12 +5,10 @@ import Lifelines from "./Lifelines";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-
 function CustomModal({ message, onClose }) {
   return (
     <Modal show={true} onHide={onClose}>
-      <Modal.Header closeButton>
-      </Modal.Header>
+      <Modal.Header closeButton></Modal.Header>
       <Modal.Body>{message}</Modal.Body>
       <Modal.Footer>
         <Button variant="secondary" onClick={onClose}>
@@ -32,25 +30,24 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
   const [score, setScore] = useState(0); 
   const [isQuizActive, setIsQuizActive] = useState(true);
   const [buttonsOrder, setButtonsOrder] = useState([]); 
+  const [isTimerPaused, setIsTimerPaused] = useState(false); 
+  const [shouldFetchNewQuestion, setShouldFetchNewQuestion] = useState(true); // New state
   const timerRef = useRef(null); 
 
   const difficultyLevels = {
-    easy: { time: 15 }, 
-    medium: { time: 10 }, 
-    hard: { time: 5 } 
+    easy: { time: 10 }, 
+    medium: { time: 7 }, 
+    hard: { time: 4 } 
   };
 
   const [timeLeft, setTimeLeft] = useState(difficultyLevels[difficulty].time); 
 
   const fetchRandomQuestion = async () => {
     try {
-
-      // Pobieranie losowych państw z API
       const response = await axios.get("https://restcountries.com/v3.1/all");
       const countries = response.data;
 
-      const randomCountry =
-        countries[Math.floor(Math.random() * countries.length)];
+      const randomCountry = countries[Math.floor(Math.random() * countries.length)];
       const countryName = randomCountry.name.common;
       const capital = randomCountry.capital && randomCountry.capital[0];
 
@@ -68,41 +65,23 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
 
       const shuffledCapitals = shuffleArray([...allCapitals]);
 
-      const incorrect = shuffledCapitals
-        .filter((c) => c !== capital)
-        .slice(0, 2);
+      const incorrect = shuffledCapitals.filter((c) => c !== capital).slice(0, 2);
 
       setIncorrectAnswers(incorrect);
-
-      // Ustawianie kolejności przycisków tylko raz po pobraniu nowego pytania
       setButtonsOrder(shuffleArray([...incorrect, capital]));
     } catch (error) {
       console.error("Error fetching data:", error);
     }
   };
 
-
-
-  const handleUseLifeline = async () => {
-    try {
-      if (correctAnswer) {
-        setModalMessage(`The correct answer is: ${correctAnswer}`);
-        setShowModal(true);
-        clearInterval(timerRef.current);
-      } else {
-        console.log("The correct answer has not been set yet.");
-      }
-    } catch (error) {
-      console.error("Error fetching data:", error);
-      setModalMessage("An error occurred while fetching data.");
+  const handleUseLifeline = () => {
+    if (correctAnswer) {
+      setModalMessage(`The correct answer is: ${correctAnswer}`);
       setShowModal(true);
+      setIsTimerPaused(true); 
       clearInterval(timerRef.current);
-
     }
   };
-  
-
-
 
   const shuffleArray = (array) => {
     const shuffledArray = [...array];
@@ -113,11 +92,16 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
     return shuffledArray;
   };
 
-
-
-   useEffect(() => {
-    if (isQuizActive && !showModal) {
+  useEffect(() => {
+    if (isQuizActive && !showModal && !isTimerPaused && shouldFetchNewQuestion) {
       fetchRandomQuestion();
+      setShouldFetchNewQuestion(false); // Reset the flag
+      setTimeLeft(difficultyLevels[difficulty].time); // Reset the timer for the new question
+    }
+  }, [isQuizActive, showModal, isTimerPaused, shouldFetchNewQuestion]);
+
+  useEffect(() => {
+    if (isQuizActive && !showModal && !isTimerPaused) {
       timerRef.current = setInterval(() => {
         setTimeLeft((prevTimeLeft) => {
           if (prevTimeLeft === 0) {
@@ -132,25 +116,24 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
     } else {
       clearInterval(timerRef.current);
     }
-    
-
-    return () => clearInterval(timerRef.current); // Czyszczenie interwału przy odmontowywaniu komponentu
-  }, [isQuizActive, showModal]);
+    return () => clearInterval(timerRef.current); 
+  }, [isQuizActive, showModal, isTimerPaused]);
 
   const handleAnswerClick = (answer) => {
     if (!isAnswered) {
       setIsAnswered(true);
       if (answer === correctAnswer) {
         setIsCorrectAnswer(true);
-        setScore((prevScore) => prevScore + 1); // Zwiększanie wyniku o 1
+        setScore((prevScore) => prevScore + 1); 
       } else {
         setIsCorrectAnswer(false);
       }
       setTimeout(() => {
         setIsAnswered(false);
         setIsCorrectAnswer(null);
-        fetchRandomQuestion();
-      }, 500); // Opóźnienie zmiany pytania o pół sekundy
+        setShouldFetchNewQuestion(true); // Set the flag to true to fetch a new question
+        setIsTimerPaused(false); // Resume the timer for the next question
+      }, 500); 
     }
   };
 
@@ -179,6 +162,7 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
 
   const handleModalClose = () => {
     setShowModal(false);
+    setIsTimerPaused(false); 
     if (isQuizActive) {
       timerRef.current = setInterval(() => {
         setTimeLeft((prevTimeLeft) => {
@@ -198,11 +182,10 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
     <div className="Quiz">
       {isQuizActive && <div className="timer">{timeLeft}</div>}
       {isQuizActive && <h1>{question}</h1>}
-      {/* Dodajemy komponent Lifelines */}
       {isQuizActive && <Lifelines onUseLifeline={handleUseLifeline} />}
       {showModal && (
-      <CustomModal message={modalMessage} onClose={() => setShowModal(false)} />
-    )}
+        <CustomModal message={modalMessage} onClose={handleModalClose} />
+      )}
       {!isQuizActive && (
         <div>
           <h2>Score: {score}</h2>
@@ -220,4 +203,3 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
 }
 
 export default Quiz;
-;
