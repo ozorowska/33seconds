@@ -6,8 +6,10 @@ import Quiz from "./Components/Quiz";
 function App() {
   const [isQuizActive, setIsQuizActive] = useState(false);
   const [topScore, setTopScore] = useState(0);
+  const [selectedDifficulty, setSelectedDifficulty] = useState('easy'); // Domyślnie łatwy poziom trudności
 
-  const handlePlayClick = () => {
+  const handlePlayClick = (difficulty) => {
+    setSelectedDifficulty(difficulty);
     setIsQuizActive(true);
   };
 
@@ -27,14 +29,26 @@ function App() {
         <main className="App-main">
           {/* Renderujemy komponent Quiz tylko jeśli isQuizActive jest true */}
           {isQuizActive ? (
-            <Quiz onTryAgain={handleTryAgain} />
+            <Quiz onTryAgain={handleTryAgain} difficulty={selectedDifficulty} />
           ) : (
             <>
               <button
-                onClick={handlePlayClick}
+                onClick={() => handlePlayClick('easy')}
                 className="btn btn-success btn-lg btn-play"
               >
-                Play
+                Play Easy
+              </button>
+              <button
+                onClick={() => handlePlayClick('medium')}
+                className="btn btn-warning btn-lg btn-play"
+              >
+                Play Medium
+              </button>
+              <button
+                onClick={() => handlePlayClick('hard')}
+                className="btn btn-danger btn-lg btn-play"
+              >
+                Play Hard
               </button>
               <div className="top-score">Top score: {topScore}</div>
             </>

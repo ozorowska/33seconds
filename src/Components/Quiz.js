@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import "./Quiz.css"; 
 
-function Quiz({ onTryAgain, topScore }) {
+function Quiz({ onTryAgain, topScore, difficulty }) {
   const [question, setQuestion] = useState("");
   const [correctAnswer, setCorrectAnswer] = useState("");
   const [incorrectAnswers, setIncorrectAnswers] = useState([]);
@@ -10,14 +10,21 @@ function Quiz({ onTryAgain, topScore }) {
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(null); 
   const [score, setScore] = useState(0); 
   const [isQuizActive, setIsQuizActive] = useState(true);
-  const [timeLeft, setTimeLeft] = useState(33); 
   const [buttonsOrder, setButtonsOrder] = useState([]); 
   const timerRef = useRef(null); 
+
+  const difficultyLevels = {
+    easy: { time: 15 }, // Dla poziomu łatwego, 30 sekund na odpowiedź
+    medium: { time: 10 }, // Dla poziomu średniego, 20 sekund na odpowiedź
+    hard: { time: 5 } // Dla poziomu trudnego, 10 sekund na odpowiedź
+  };
+
+  const [timeLeft, setTimeLeft] = useState(difficultyLevels[difficulty].time); 
 
   const fetchRandomQuestion = async () => {
     try {
 
-      // Pobieranie losowych panstw z API
+      // Pobieranie losowych państw z API
       const response = await axios.get("https://restcountries.com/v3.1/all");
       const countries = response.data;
 
@@ -65,7 +72,7 @@ function Quiz({ onTryAgain, topScore }) {
   useEffect(() => {
     if (isQuizActive) {
       fetchRandomQuestion();
-      // Uruchamiamy timer na 33 sekundy
+      // Uruchamiamy timer na czas odpowiadający wybranemu poziomowi trudności
       timerRef.current = setInterval(() => {
         setTimeLeft((prevTimeLeft) => {
           if (prevTimeLeft === 0) {
@@ -81,7 +88,7 @@ function Quiz({ onTryAgain, topScore }) {
       clearInterval(timerRef.current);
     }
 
-    return () => clearInterval(timerRef.current); // Clear the interval on component unmount
+    return () => clearInterval(timerRef.current); // Czyszczenie interwału przy odmontowywaniu komponentu
   }, [isQuizActive]);
 
   const handleAnswerClick = (answer) => {
@@ -89,7 +96,7 @@ function Quiz({ onTryAgain, topScore }) {
       setIsAnswered(true);
       if (answer === correctAnswer) {
         setIsCorrectAnswer(true);
-        setScore((prevScore) => prevScore + 1); // Zwiększamy wynik o 1
+        setScore((prevScore) => prevScore + 1); // Zwiększanie wyniku o 1
       } else {
         setIsCorrectAnswer(false);
       }
@@ -145,4 +152,3 @@ function Quiz({ onTryAgain, topScore }) {
 }
 
 export default Quiz;
-
