@@ -1,0 +1,120 @@
+/* App.css */
+
+.App {
+  background-image: url("./assets/76827.jpg");
+  background-size: cover;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+  
+}
+
+.container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 50px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.App-header h1 {
+  color: #333333;
+}
+
+.btn.btn-play {
+  /* font-size: 1.25rem; */
+  margin-bottom: 5px;
+  background-color: #1e7e34;
+  border-color: #1e7e34;
+  color: white;
+  margin-left: 15px; /* Odstęp po lewej stronie */
+  margin-right: 15px;
+  width: 200px;
+  height: 50px;
+  font-size: 20px;
+}
+
+.btn.btn-play:hover {
+  background-color: #1c7430;
+  border-color: #1c7430;
+}
+
+.btn.btn-play:active {
+  background-color: #19692b;
+  border-color: #19692b;
+}
+
+.top-score {
+  margin-top: 50px;
+  color: #333333;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.App-footer {
+  text-align: center;
+  color: #333333;
+  position: fixed;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.App-header {
+  position: relative;
+}
+
+.logout-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+.leaderboard {
+  margin-top: 50px;
+}
+
+.leaderboard h2 {
+  margin-bottom: 20px;
+}
+
+
+.form-select.form-select-sm {
+  width: auto;
+  display: inline-block;
+}
+
+
+
+.leaderboard-table {
+  width: 50%; /* Ustaw szerokość tabeli na 50% */
+  margin: 0 auto; /* Wyśrodkuj tabelę */
+}
+
+
+
+.form-select.form-select-sm {
+  width: auto;
+  display: inline-block;
+}
+
+.table-sm th, .table-sm td {
+  padding: 0.3rem;
+}
+#accordionExample .accordion-item {
+  background-color: transparent !important;
+  border: none !important;
+}
+
+#accordionExample .accordion-button {
+  background-color: white !important;
+  max-width: 25%;
+  border-color: #333333;
+}
+.accordion{
+  margin-top:50px;
+}
+
+#accordionExample .accordion-body {
+  background-color: transparent !important;
+}

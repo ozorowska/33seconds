@@ -1,0 +1,65 @@
+.Quiz {
+  text-align: center;
+}
+
+.answers {
+  margin-top: 30px;
+}
+
+.answer-button {
+  background-color:  #007bff;
+  color: white;
+  padding: 30px 60px;
+  margin: 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-size: 24px;
+}
+
+.answer-button:hover {
+  background-color: #0056b3;
+}
+
+.answer-button.correct {
+  background-color: green;
+}
+
+.answer-button.incorrect {
+  background-color: red;
+}
+.play-button {
+  background-color: #1e7e34;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 20px 40px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.play-button:hover {
+  background-color: #1e7e34;
+}
+
+.play-button:active {
+  background-color: #1e7e34;
+}
+
+.timer {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #ffffff;
+  border-radius: 50%;
+  width: 100px;
+  height: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  font-weight: bold;
+  border: 2px solid #000000;
+}
