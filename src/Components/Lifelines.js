@@ -19,7 +19,7 @@ function Lifelines({ onUseLifeline }) {
 
   return (
     <div>
-      <button onClick={handleUseLifeline} variant="secondary" >Lifeline</button>
+      <button onClick={handleUseLifeline}>Lifeline</button>
       <p>Remaining lifelines: {1 - lifelinesUsed}</p>
 
       <Modal show={showModal} onHide={handleClose}>
