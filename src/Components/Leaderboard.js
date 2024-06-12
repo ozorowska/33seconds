@@ -2,8 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js'; // Import Bootstrap JS
-import '../App.css'
-
+import '../App.css';
 
 function Leaderboard() {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -14,7 +13,12 @@ function Leaderboard() {
     const fetchLeaderboard = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://localhost:5000/api/users/leaderboard?difficulty=${selectedDifficulty}`);
+        const token = localStorage.getItem('token'); // Pobierz token z localStorage
+        const response = await axios.get(`http://localhost:5000/api/users/leaderboard?difficulty=${selectedDifficulty}`, {
+          headers: {
+            Authorization: `Bearer ${token}`, // Przekaż token w nagłówku
+          },
+        });
         console.log(response.data); // Debugging line
         setLeaderboard(response.data);
         setLoading(false);

@@ -24,11 +24,11 @@ function Register() {
   };
 
   return (
-    
+    <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-6">
-          
-            
+          <div className="card">
+            <div className="card-body">
               {error && <div className="alert alert-danger">{error}</div>}
               <form onSubmit={handleSubmit}>
                 <div className="form-group mb-3">
@@ -42,7 +42,7 @@ function Register() {
                     required
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group mb-3">
                   <input
                     type="email"
                     className="form-control"
@@ -53,7 +53,7 @@ function Register() {
                     required
                   />
                 </div>
-                <div className="form-group">
+                <div className="form-group mb-3">
                   <input
                     type="password"
                     className="form-control"
@@ -71,7 +71,9 @@ function Register() {
               </p>
             </div>
           </div>
-        
+        </div>
+      </div>
+    </div>
   );
 }
 

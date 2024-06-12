@@ -14,19 +14,27 @@ function Login({ onLogin }) {
 
     try {
       const response = await axios.post('http://localhost:5000/api/users/login', { username, password });
+      const { token, user } = response.data;
+
+      // Save token to localStorage
+      localStorage.setItem('token', token);
+
+      // Optional: Save user data to localStorage or state
+      localStorage.setItem('user', JSON.stringify(user));
+
       onLogin(response.data);
       navigate('/quiz'); // Navigate after successful login
     } catch (err) {
       setError('Invalid username or password');
-      console.error('Error logging in', err);
+      console.error('Error logging in:', err.response ? err.response.data : err.message);
     }
   };
 
   return (
-    
+    <div className="container">
       <div className="row justify-content-center">
         <div className="col-md-6">
-          
+          <div className="card">
             <div className="card-body">
               {error && <div className="alert alert-danger">{error}</div>}
               <form onSubmit={handleSubmit}>
@@ -45,7 +53,7 @@ function Login({ onLogin }) {
                   <input
                     type="password"
                     className="form-control"
-                    id="floatingPassword"
+                    id="password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="Password"
@@ -60,8 +68,8 @@ function Login({ onLogin }) {
             </div>
           </div>
         </div>
-      
-   
+      </div>
+    </div>
   );
 }
 

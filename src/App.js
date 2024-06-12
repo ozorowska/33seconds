@@ -5,7 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Quiz from './Components/Quiz';
 import Login from './Components/Login';
 import Register from './Components/Register';
-import Leaderboard from './Components/Leaderboard'; // Importuj Leaderboard
+import Leaderboard from './Components/Leaderboard';
 import axios from 'axios';
 
 function App() {
@@ -27,11 +27,12 @@ function App() {
       setTopScore(score);
       if (user) {
         try {
-          await axios.put('http://localhost:5000/api/users/score', {
-            token,
-            difficulty: selectedDifficulty,
-            score,
-          });
+          const token = localStorage.getItem('token'); // Get the token from localStorage
+          await axios.put(
+            'http://localhost:5000/api/users/score',
+            { difficulty: selectedDifficulty, score },
+            { headers: { Authorization: `Bearer ${token}` } }
+          );
         } catch (err) {
           console.error('Error updating score:', err);
         }
@@ -42,16 +43,14 @@ function App() {
   const handleLogin = (data) => {
     setUser(data.user);
     setToken(data.token);
+    localStorage.setItem('token', data.token); // Save the token to localStorage
   };
 
   const handleLogout = () => {
     setUser(null);
     setToken('');
+    localStorage.removeItem('token'); // Remove the token from localStorage
     setIsQuizActive(false);
-  };
-
-  const toggleLeaderboard = () => {
-    setShowLeaderboard(!showLeaderboard);
   };
 
   return (

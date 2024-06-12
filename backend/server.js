@@ -1,4 +1,6 @@
-require('dotenv').config(); // Załaduj zmienne środowiskowe na samym początku
+require('dotenv').config();
+console.log('JWT_SECRET:', process.env.JWT_SECRET); // Dodaj ten wiersz
+
 
 const express = require('express');
 const mongoose = require('mongoose');

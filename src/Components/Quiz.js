@@ -24,7 +24,7 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
   const [modalMessage, setModalMessage] = useState('');
   const [question, setQuestion] = useState('');
   const [correctAnswer, setCorrectAnswer] = useState('');
-  const [incorrectAnswers, setIncorrectAnswers] = useState([]); // Use this state
+  const [incorrectAnswers, setIncorrectAnswers] = useState([]);
   const [isAnswered, setIsAnswered] = useState(false);
   const [isCorrectAnswer, setIsCorrectAnswer] = useState(null); 
   const [score, setScore] = useState(0); 
@@ -153,8 +153,26 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
   useEffect(() => {
     if (!isQuizActive && score > topScore) {
       onTryAgain(score);
+      saveScore(score);
     }
   }, [isQuizActive, score, topScore, onTryAgain]);
+
+  const saveScore = async (score) => {
+    const token = localStorage.getItem('token');
+    try {
+      await axios.put(
+        'http://localhost:5000/api/users/score',
+        { difficulty, score },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error('Error updating score:', error.response ? error.response.data : error.message);
+    }
+  };
 
   const handleModalClose = () => {
     setShowModal(false);
@@ -173,7 +191,7 @@ function Quiz({ onTryAgain, topScore, difficulty }) {
       }, 1000);
     }
   };
-  
+
   return (
     <div className="Quiz">
       {isQuizActive && <div className="timer">{timeLeft}</div>}
